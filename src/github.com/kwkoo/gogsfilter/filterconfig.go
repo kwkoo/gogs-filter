@@ -92,6 +92,14 @@ func (fc FilterConfig) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
+
+	// copy all headers starting with X-
+	for k, v := range r.Header {
+		if strings.HasPrefix(k, "X-") {
+			req.Header[k] = v
+		}
+	}
+
 	_, err = fc.client.Do(req)
 	if err != nil {
 		log.Printf("error while making request to target server %s: %s", target, err)
