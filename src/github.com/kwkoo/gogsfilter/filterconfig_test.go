@@ -25,7 +25,7 @@ func TestSimpleRules(t *testing.T) {
 }
 
 func TestTemplateRule(t *testing.T) {
-	rules := `[{"ref":"ref/heads/main", "target":"http://el-pipeline.{{ (index .commits 0).committer.username }}-stage.svc.cluster.local:8080"}]`
+	rules := `[{"ref":"ref/heads/master", "target":"http://el-pipeline.{{ (index .commits 0).committer.username }}-stage.svc.cluster.local:8080"}]`
 
 	body := `{
 		"ref": "refs/heads/develop",
@@ -101,7 +101,7 @@ func TestTemplateRule(t *testing.T) {
 		t.Errorf("error parsing body JSON: %v", err)
 		return
 	}
-	target := fc.targetForRef("ref/heads/main", parsed)
+	target := fc.targetForRef("ref/heads/master", parsed)
 	if target != "http://el-pipeline.committerusername-stage.svc.cluster.local:8080" {
 		t.Errorf("template execution failed - got: %s", target)
 	}

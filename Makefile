@@ -10,4 +10,4 @@ clean:
 	@$(GOPATH)/clean.sh
 
 test:
-	@GOPATH=$(GOPATH) go test github.com/kwkoo/gogsfilter
+	@GOPATH=$(GOPATH) go test -v github.com/kwkoo/gogsfilter

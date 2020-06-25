@@ -100,7 +100,7 @@ func (fc FilterConfig) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	target := fc.targetForRef(ref, parsed)
 	if len(target) == 0 {
-		log.Printf("could not get target for ref %s", ref)
+		log.Printf("could not get target for ref %s - ignoring request", ref)
 		fmt.Fprint(w, "OK")
 		return
 	}
