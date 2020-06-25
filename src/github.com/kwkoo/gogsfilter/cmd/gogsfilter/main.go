@@ -17,7 +17,7 @@ import (
 func main() {
 	config := struct {
 		ListenPort int    `json:"port" default:"8080" usage:"Web server port"`
-		Rulesjson  string `json:"rulesjson" usage:"Mapping rules in JSON format"`
+		Rulesjson  string `json:"rulesjson" usage:"Mapping rules in JSON format; rules are expected to be a slice of objects with a ref key and a target key; if target contains {{}} it is assumed to be a template"`
 	}{}
 	if err := configparser.Parse(&config); err != nil {
 		log.Printf("error parsing configuration: %v", err)
