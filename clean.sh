@@ -1,5 +1,7 @@
 #!/bin/bash
 
-devProject="dev"
+PROJ="dev"
 
-oc delete -n $devProject all -l app=gogsfilter
+oc delete -n $PROJ all -l app=gogsfilter
+
+exit 0

@@ -34,19 +34,3 @@ debug
 # Test Coverage
 coverage.html
 
-# Visual Studio Code
-src/golang.org/x/**
-src/github.com/acroca
-src/github.com/cweill
-src/github.com/go-delve
-src/github.com/golang/lint
-src/github.com/karrick
-src/github.com/mdempsky
-src/github.com/pkg
-src/github.com/ramya-rao-a/go-outline
-src/github.com/rogpeppe
-src/github.com/sqs
-src/github.com/uudashr
-src/github.com/derekparker
-src/github.com/ianthehat
-src/github.com/stamblerre

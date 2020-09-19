@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/kwkoo/configparser"
-	"github.com/kwkoo/gogsfilter"
+	"github.com/kwkoo/gogsfilter/pkg"
 )
 
 func main() {
@@ -24,7 +24,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	fc := gogsfilter.InitFilterConfig(config.Rulesjson)
+	fc := pkg.InitFilterConfig(config.Rulesjson)
 
 	// Setup signal handling.
 	shutdown := make(chan os.Signal)

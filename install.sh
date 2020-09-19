@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # This script deploys the gogsfilter web server to the dev project.
+PROJ=dev
 
 set -e
 
@@ -8,15 +9,13 @@ cd $(dirname $0)
 BASE=$(pwd)
 cd - >> /dev/null
 
-oc new-project dev || oc project dev
+oc new-project $PROJ || oc project $PROJ
 
 oc new-app \
   --name=gogsfilter \
   --binary \
-  -n dev \
-  --build-env=IMPORT_URL=. \
-  --build-env=INSTALL_URL=github.com/kwkoo/gogsfilter/cmd/gogsfilter \
-  --docker-image=docker.io/centos/go-toolset-7-centos7:latest \
+  -n $PROJ \
+  --docker-image=ghcr.io/kwkoo/go-toolset-7-centos7:1.15.2 \
   --env=RULESJSON='[{"ref":"refs/heads/master","target":"http://el-go-pipeline.dev.svc.cluster.local:8080"}]'
 
 echo -n "Waiting for imagestreamtag to appear..."
@@ -24,7 +23,7 @@ echo -n "Waiting for imagestreamtag to appear..."
 set +e
 
 while true; do
-  oc get -n dev istag/go-toolset-7-centos7:latest > /dev/null 2>&1
+  oc get -n $PROJ istag/go-toolset-7-centos7:1.15.2 > /dev/null 2>&1
   if [ $? -eq 0 ]; then
     echo "done"
     break
@@ -35,10 +34,11 @@ done
 
 set -e
 
-oc start-build -n dev gogsfilter \
+oc start-build gogsfilter \
+  -n $PROJ \
   --follow \
   --from-dir=${BASE}/src
 
-oc expose -n dev dc/gogsfilter --port 8080
+oc expose -n $PROJ deploy/gogsfilter --port 8080
 
-echo "gogsfilter is now available at http://gogsfilter.dev.svc.cluster.local:8080"
+echo "gogsfilter is now available at http://gogsfilter.${PROJ}.svc.cluster.local:8080"

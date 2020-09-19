@@ -2,24 +2,23 @@ PREFIX=github.com/kwkoo
 PACKAGE=gogsfilter
 IMAGE_VERSION=0.1
 
-GOPATH:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-GOBIN=$(GOPATH)/bin
+BASE:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 .PHONY: install clean test dockerimage
 
 install:
-	@$(GOPATH)/install.sh
+	@$(BASE)/install.sh
 
 clean:
-	@$(GOPATH)/clean.sh
+	@$(BASE)/clean.sh
 
 test:
-	@GOPATH=$(GOPATH) go test -v $(PREFIX)/$(PACKAGE)
+	@cd $(BASE)/src && go test -v $(PREFIX)/$(PACKAGE)/pkg
 
 dockerimage:
-	docker build -t $(PREFIX)/$(PACKAGE):$(IMAGE_VERSION) .
-	docker tag $(PREFIX)/$(PACKAGE):$(IMAGE_VERSION) quay.io/kwkoo/$(PACKAGE):$(IMAGE_VERSION)
-	docker tag quay.io/kwkoo/$(PACKAGE):$(IMAGE_VERSION) quay.io/kwkoo/$(PACKAGE):latest
-	docker login quay.io
-	docker push quay.io/kwkoo/$(PACKAGE):$(IMAGE_VERSION)
-	docker push quay.io/kwkoo/$(PACKAGE):latest
+	docker build -t $(PREFIX)/$(PACKAGE):$(IMAGE_VERSION) $(BASE)
+	docker tag $(PREFIX)/$(PACKAGE):$(IMAGE_VERSION) ghcr.io/kwkoo/$(PACKAGE):$(IMAGE_VERSION)
+	docker tag ghcr.io/kwkoo/$(PACKAGE):$(IMAGE_VERSION) ghcr.io/kwkoo/$(PACKAGE):latest
+	docker login ghcr.io
+	docker push ghcr.io/kwkoo/$(PACKAGE):$(IMAGE_VERSION)
+	docker push ghcr.io/kwkoo/$(PACKAGE):latest

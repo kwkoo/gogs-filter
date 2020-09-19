@@ -1,4 +1,4 @@
-package gogsfilter
+package pkg
 
 import (
 	"bytes"

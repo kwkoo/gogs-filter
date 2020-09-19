@@ -2,6 +2,8 @@
 
 This service filters webhook requests from Gogs and only passes the requests through to a Tekton EventListener when the git ref matches what's been defined in the rules.
 
+This was developed because OpenShift Pipelines 1.0 did not support [CEL interceptors](https://bigkevmcd.github.io/kubernetes/tekton/pipeline/2020/02/05/cel-interception.html).
+
 This enables you to kick different pipelineruns off depending on the git branch.
 
 The service is configured with a command line argument `-rulesjson` or an environment variable `RULESJSON`. This configuration option expects a string in the following format (formatted for readability):
